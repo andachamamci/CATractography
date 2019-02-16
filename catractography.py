@@ -194,6 +194,7 @@ def create_graph(csd_odf, sphere):
 
 def fit_csd_model(data_file, bval_file, bvec_file, UseMemoryEfficiently=True, UseParallel=True, Print_Response=False, roi_radius=10, fa_thr=0.7):
     """ Calculate the fiber orientation distribution function (fODF)
+	Uses DIPY library
 
     Parameters
     ----------
