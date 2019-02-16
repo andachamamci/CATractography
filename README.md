@@ -1,2 +1,2 @@
 # CATractography
-Cellular Automata Tractography: Fast and multilabel geodesic tractography on the GPU
+Cellular Automata Tractography: Fast Geodesic Diffusion MR Tractography and Connectivity Based Segmentation on the GPU
