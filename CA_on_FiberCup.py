@@ -34,11 +34,12 @@ SEEDFILE_NAME = './FiberCupData/groundtruthseeds.nii'
 
 csd_odf, sphere = CAT.fit_csd_model(DWIFILE_NAME, BVALFILE_NAME, BVECFILE_NAME, Print_Response=False, UseMemoryEfficiently=False, UseParallel=False, roi_radius=30, fa_thr=0.6)
 
-nbh_pdf, nbh = CAT.create_graph(csd_odf, sphere)
+tissueprior = np.ones(csd_odf.shape[0:3], dtype=np.float32)
+
+nbh_pdf, nbh = CAT.create_graph(csd_odf, sphere, tissueprior)
 
 seedimg = nib.load(SEEDFILE_NAME)
 seed_data = seedimg.get_data()
-
 for seedid in range(0,7):
     seed = np.int32(seed_data[:,:,1:4,seedid]) # The groundtruth seeds were defined as 5 slices!
        

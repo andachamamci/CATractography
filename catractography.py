@@ -130,7 +130,7 @@ class CATractography:
             self.gpu_one_iteration()
 
 
-def create_graph(csd_odf, sphere):
+def create_graph(csd_odf, sphere, tissueprior):
 
     # All 26 directions are defined.
     nbh=np.array([[1,0,0],[0,1,0],[1,1,0],[1,-1,0],[-1,1,0],[-1,0,0],[0,-1,0],[-1,-1,0],[-1,0,-1],[0,0,1],[0,-1,-1],[0,0,-1],[-1,-1,-1],[-1,0,1],[0,1,-1],[0,-1,1],[1,1,-1],[-1,1,1],[1,0,1],[0,1,1],[1,1,1],[1,-1,1],[1,0,-1],[-1,-1,1],[-1,1,-1],[1,-1,-1]])
@@ -184,8 +184,8 @@ def create_graph(csd_odf, sphere):
                             other = tuple(cur+nbh[d])
                             otherd = negnbh[d]
                             # No need to use tissue priors. Andac
-                            #newval = tissueprior[cur] * tissueprior[other] * 0.5 * (nbh_pdf[cur][d] + nbh_pdf[other][otherd]) #averaging is problematic
-                            newval = 0.5 * (nbh_pdf[cur][d] + nbh_pdf[other][otherd])
+                            newval = tissueprior[cur] * tissueprior[other] * 0.5 * (nbh_pdf[cur][d] + nbh_pdf[other][otherd]) #averaging is problematic
+                            #newval = 0.5 * (nbh_pdf[cur][d] + nbh_pdf[other][otherd])
                             nbh_pdf[cur][d] = newval
                             nbh_pdf[other][otherd] = newval
                         
