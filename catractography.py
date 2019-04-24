@@ -37,7 +37,7 @@ class CATractography:
     def __init__(self):
         os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
         
-        self.ctx = cl.create_some_context()
+        self.ctx = cl.create_some_context(interactive=True)
         self.queue = cl.CommandQueue(self.ctx)
         
         self.ngpuprocs = 0
