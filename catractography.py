@@ -192,7 +192,7 @@ def create_graph(csd_odf, sphere, tissueprior):
     nbh_pdf[nbh_pdf<0]=0        
     return nbh_pdf, nbh
 
-def fit_csd_model(data_file, bval_file, bvec_file, UseMemoryEfficiently=True, UseParallel=True, Print_Response=False, roi_radius=10, fa_thr=0.7):
+def fit_csd_model(data_file, bval_file, bvec_file, sh_order=8, UseMemoryEfficiently=True, UseParallel=True, Print_Response=False, roi_radius=10, fa_thr=0.7):
     """ Calculate the fiber orientation distribution function (fODF)
 	Uses DIPY library
 
@@ -204,6 +204,7 @@ def fit_csd_model(data_file, bval_file, bvec_file, UseMemoryEfficiently=True, Us
     bvec_file : File name of the bvec file.
         Text file listing diffusion gradient directions 
         of each volume in the dataset.
+    sh_order : Spherical harmonic order for CSD. Try lower values (4,6...) if the fit fails for low number of directions.
     Print_Response : Print detailed information on the estimated fiber response function
 
     Returns
@@ -246,7 +247,7 @@ def fit_csd_model(data_file, bval_file, bvec_file, UseMemoryEfficiently=True, Us
         print('radial diffusivity.')
         print('------------------------------------------------------------------------------------------------')
     
-    csd_model = ConstrainedSphericalDeconvModel(gtab,response)
+    csd_model = ConstrainedSphericalDeconvModel(gtab,response,sh_order=sh_order)
     
     if UseParallel:
         if (UseMemoryEfficiently):
