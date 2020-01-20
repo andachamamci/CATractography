@@ -133,17 +133,18 @@ class CATractography:
 def create_graph(csd_odf, sphere, tissueprior):
 
     # All 26 directions are defined.
-    nbh=np.array([[1,0,0],[0,1,0],[1,1,0],[1,-1,0],[-1,1,0],[-1,0,0],[0,-1,0],[-1,-1,0],[-1,0,-1],[0,0,1],[0,-1,-1],[0,0,-1],[-1,-1,-1],[-1,0,1],[0,1,-1],[0,-1,1],[1,1,-1],[-1,1,1],[1,0,1],[0,1,1],[1,1,1],[1,-1,1],[1,0,-1],[-1,-1,1],[-1,1,-1],[1,-1,-1]])
+    nbh=np.array([[1,0,0],[0,1,0],[1,1,0],[1,-1,0],[-1,1,0],[-1,0,0],[0,-1,0],[-1,-1,0],[-1,0,-1],[0,0,1],[0,-1,-1],[0,0,-1],[-1,-1,-1],[-1,0,1],[0,1,-1],[0,-1,1],[1,1,-1],[-1,1,1],[1,0,1],[0,1,1],[1,1,1],[1,-1,1],[1,0,-1],[-1,-1,1],[-1,1,-1],[1,-1,-1]],dtype=np.int32)
     
     # Transform 724 directions to 26 directions for every voxels.
     # Find the minimum angle value by calculating the angle between 
     # the vector in 724 direcitons and the vector in 26 directions.
     # This transformation data is saved in transform[] array.
-    transform=np.zeros(sphere.theta.shape[0]) 
+    transform=np.zeros(sphere.theta.shape[0],dtype=int32) 
+    fnbh = np.float32(nbh)
     for i in range(0,sphere.theta.shape[0]): 
         min_ang=360
         for j in range(0,nbh.shape[0]): #26 neighborhoods
-            dot=(nbh[j,0]*sphere.x[i]+nbh[j,1]*sphere.y[i]+nbh[j,2]*sphere.z[i])/(np.linalg.norm(nbh[j,:]))
+            dot=(fnbh[j,0]*sphere.x[i]+fnbh[j,1]*sphere.y[i]+fnbh[j,2]*sphere.z[i])/(np.linalg.norm(fnbh[j,:]))
             ang=np.arccos(dot)
     
             if min_ang>ang:
@@ -151,7 +152,7 @@ def create_graph(csd_odf, sphere, tissueprior):
                 transform[i]=j
     transform = np.int32(transform)
     
-    nbh_pdf=np.zeros((csd_odf.shape[0],csd_odf.shape[1],csd_odf.shape[2],nbh.shape[0]))
+    nbh_pdf=np.zeros((csd_odf.shape[0],csd_odf.shape[1],csd_odf.shape[2],nbh.shape[0]),dtype=np.float32)
     
     # In this part, we trasnform odf's from 724 directions 
     # to distrubuted 26 directions. Then we normalize the ODF's for all voxels.
