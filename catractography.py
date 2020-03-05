@@ -139,7 +139,7 @@ def create_graph(csd_odf, sphere, tissueprior):
     # Find the minimum angle value by calculating the angle between 
     # the vector in 724 direcitons and the vector in 26 directions.
     # This transformation data is saved in transform[] array.
-    transform=np.zeros(sphere.theta.shape[0],dtype=int32) 
+    transform=np.zeros(sphere.theta.shape[0],dtype=np.int32) 
     fnbh = np.float32(nbh)
     for i in range(0,sphere.theta.shape[0]): 
         min_ang=360
