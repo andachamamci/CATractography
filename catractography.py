@@ -252,7 +252,7 @@ def fit_csd_model(data_file, bval_file, bvec_file, sh_order=8, UseMemoryEfficien
     
     if UseParallel:
         if (UseMemoryEfficiently):
-            csd_odf = np.zeros((img.shape[0],img.shape[1],img.shape[2],sphere.phi.shape[0]),dtype=np.float64)
+            csd_odf = np.zeros((img.shape[0],img.shape[1],img.shape[2],sphere.phi.shape[0]),dtype=np.float32)
             slimg = np.zeros((img.shape[0],img.shape[1],1,img.shape[3]))
             for sl in range(0,img.shape[2]):
                 print('processing slice ' + str(sl+1) + ' of ' + str(img.shape[2]) )
@@ -289,7 +289,7 @@ def fit_csd_model(data_file, bval_file, bvec_file, sh_order=8, UseMemoryEfficien
     else:
         if (UseMemoryEfficiently):
             # Do CSD fit slice by slice to use memory efficiently in processing big data (such as HCP)
-            csd_odf = np.zeros((img.shape[0],img.shape[1],img.shape[2],sphere.phi.shape[0]),dtype=np.float64)
+            csd_odf = np.zeros((img.shape[0],img.shape[1],img.shape[2],sphere.phi.shape[0]),dtype=np.float32)
             slimg = np.zeros((img.shape[0],img.shape[1],1,img.shape[3]))
             for sl in range(0,img.shape[2]):
                 print('processing slice ' + str(sl+1) + ' of ' + str(img.shape[2]) )
