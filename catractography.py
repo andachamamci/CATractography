@@ -165,8 +165,9 @@ def create_graph(csd_odf, sphere, tissueprior):
                 if (np.sum(nbh_pdf[k,m,sl,:])<0.0001):
                     nbh_pdf[k,m,sl,:]=0
                 else:
-                    nbh_pdf[k,m,sl,:]=0.5*(nbh_pdf[k,m,sl,:]/np.max(nbh_pdf[k,m,sl,:]))
+                    nbh_pdf[k,m,sl,:]=(nbh_pdf[k,m,sl,:]/np.max(nbh_pdf[k,m,sl,:]))
                     #22/3/2018: Scale maximum to 0.5 (Instead of normalizing to 1) see: medina2007
+                    #06/06/2020: There is a mistake. If 0.5 used here, should not be divided by 2 when averaging.  
     
     #Obtain a symmetric edge weighting
     negnbh = np.zeros(nbh.shape[0],dtype=np.int32)

@@ -51,8 +51,10 @@ for seedid in range(0,7):
     tf=time.time()
     CA.get_gpu_variables()
     
-    x=CA.conn[:,:,1]
-    plt.imshow(CA.conn[:,:,1] > 0.45,cmap='Oranges',interpolation='gaussian')
+    x=(CA.conn[:,:,1]-0.85)/0.15
+    x[x<0]=0
+    plt.imshow(x,cmap='Oranges',interpolation='gaussian')
+    #plt.imshow(CA.conn[:,:,1] > 0.9,cmap='Oranges',interpolation='gaussian')
     plt.title('Seed #'+str(seedid+1))
     plt.show()
     print('CA Computation Time : ' + str(tf-ti))

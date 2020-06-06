@@ -110,13 +110,16 @@ CA.get_gpu_variables()
     Results
     --------------------------------------------'''
 from nilearn import plotting
-connimg = nib.Nifti1Image(CA.conn, seedimg.affine)
+
+data = (CA.conn - 0.99)/0.01
+data[data<0] = 0
+connimg = nib.Nifti1Image(data, seedimg.affine)
 plotting.plot_glass_brain(connimg,
                           #cmap='cold_white_hot',
-                          threshold=0.5,
+                          threshold=0,
                           colorbar=True,
-                          #vmin=0.45,
-                          #vmax=1,
+                          vmin=0,
+                          vmax=1,
                           #symmetric_cbar=False,
                           output_file='conn_glass.pdf',
                           black_bg=True,
