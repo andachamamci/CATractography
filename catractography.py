@@ -19,15 +19,26 @@
 	andachamamci@gmail.com
 
 """
+
+# -----------------------
+# COMPATIBILITY TESTED ON
+# -----------------------
+# DIPY version 1.2.0
+# Numpy version 1.18.5
+# pyopencl version 2020.2.2
+# Nibabel 3.2.0
+# -----------------------
+
 import numpy as np
 import os
 
 import nibabel as nib
 
 from dipy.io import read_bvals_bvecs
+from dipy.io.image import load_nifti
 from dipy.core.gradients import gradient_table
 from dipy.data import get_sphere
-from dipy.reconst.csdeconv import auto_response
+from dipy.reconst.csdeconv import auto_response_ssst
 from dipy.reconst.csdeconv import ConstrainedSphericalDeconvModel
 from dipy.direction import peaks_from_model
 
@@ -235,8 +246,9 @@ def fit_csd_model(data_file, bval_file, bvec_file, sh_order=8, UseMemoryEfficien
     # The auto_response function will calculate FA for an ROI of radius equal to roi_radius 
     # in the center of the volume and return the response function estimated in that region 
     # for the voxels with FA higher than 0.7.
-   
-    response, ratio = auto_response(gtab, img.dataobj, roi_radius=roi_radius, fa_thr=fa_thr)
+
+    data, affine = load_nifti(data_file)
+    response, ratio = auto_response_ssst(gtab, data, roi_radii=roi_radius, fa_thr=fa_thr)
 
     if (Print_Response):
         print('------------------------------------------------------------------------------------------------')
